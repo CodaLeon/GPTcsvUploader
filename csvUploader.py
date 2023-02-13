@@ -23,9 +23,14 @@ with st.sidebar:
         max_value=1.0, 
         value=0.8, 
         step=0.1)
+    freq_penalty = st.slider("Increase the Frequency Penalty to reduce repeating of words at verbatim", 
+        min_value=0.0, 
+        max_value=2.0, 
+        value=0.0, 
+        step=0.1)
     max_tokens = st.number_input('Insert max tokens (1 token = 3/4 words)',
         min_value=0, 
-        max_value=3000,
+        max_value=4096,
         value=2000)
 
 #Initialising session
@@ -48,7 +53,7 @@ def generate_response(prompt):
             temperature = temperature, #0-1 Higher the temp, the more liberties it takes 
             top_p = 1,
             max_tokens = max_tokens, #1 Token = 3/4 word
-            frequency_penalty = 0,
+            frequency_penalty = freq_penalty,
             presence_penalty = 0
     )
         return completions.choices[0].text
